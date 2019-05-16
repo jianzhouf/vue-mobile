@@ -1,22 +1,21 @@
 <template>
-  <div>
-    <ZButton @click="show">show</ZButton>
-    <ActionSheet ref="ActionSheet"></ActionSheet>
+  <div style="padding: 20px;">
+    <ZButton @click="show" type="primary">show</ZButton>
   </div>
 </template>
 <script>
-import ActionSheet from "@/components/ActionSheet.vue";
 import ZButton from "@/components/ZButton.vue";
-
+import ZActionSheet from "@/components/ZActionSheet/index";
 export default {
   name: "ActionSheetView",
   components: {
-    ActionSheet,
     ZButton
   },
   methods: {
     show() {
-      this.$refs.ActionSheet.show();
+      ZActionSheet.show({
+        options: [{title: "哈哈哈",event: ()=>{alert(123)}}]
+      })
     }
   }
 };
