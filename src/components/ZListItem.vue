@@ -5,14 +5,26 @@
         <slot></slot>
       </div>
       <div class="z-list-item-extra"></div>
+      <ZIcon v-if="isRightArrow" type="right"></ZIcon>
     </div>
   </div>
 </template>
 <script>
+import ZIcon from "@/components/ZIcon.vue";
 export default {
-  //   props: ["title"],
+  components: {
+    ZIcon
+  },
+  props: {
+    arrow: String
+  },
   data() {
     return {};
+  },
+  computed: {
+    isRightArrow: function() {
+      return this.arrow == "right";
+    }
   }
 };
 </script>
@@ -27,10 +39,14 @@ export default {
   padding: 1rem 1.4rem;
   padding-left: 0;
   border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
 }
-.z-list-item:last-child .z-list-item-line{
+.z-list-item-content {
+  flex: auto;
+}
+.z-list-item:last-child .z-list-item-line {
   border-bottom: 0;
 }
-
 </style>
 
