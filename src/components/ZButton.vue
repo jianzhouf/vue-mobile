@@ -1,8 +1,9 @@
 <template>
   <button
     class="z-button"
-    :class="{noBorder: noBorder, primary:type=='primary'  }"
+    :class="classObject"
     :disabled="disabled"
+    :inline="inline"
     @click="$emit('click', $event)"
   >
     <slot></slot>
@@ -17,39 +18,65 @@ export default {
       type: Boolean,
       default: false
     },
-    noBorder: {
+    inline: {
       type: Boolean,
       default: false
     },
     type: {
       type: String
+    },
+    size: {
+      type: String // small
+    }
+  },
+  computed: {
+    classObject: function() {
+      return {
+        "z-button-primary": this.type === "primary",
+        "z-button-warning": this.type === "warning",
+        "z-button-inline": this.inline,
+        "z-button-small": this.size === "small",
+        "z-button-radius": true
+      };
     }
   }
 };
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
+@import "./config.scss";
 .z-button {
+  display: block;
   box-sizing: border-box;
-  font-size: 18px;
+  font-size: $font-size;
   width: 100%;
-  background: #fff;
-  color: #333;
-  padding: 10px 0;
+  background: $background-color;
+  color: $text-color;
+  padding: $padding-y $padding-x;
   outline: none;
-  border: 1px solid #eee;
-}
-.z-button:disabled{
-  opacity: 0.8;
-}
-.noBorder {
   border: 0;
-}
-.primary {
-  color: #fff;
-  background-color: #108ee9;
-  border: 0;
-  border-radius: 0.5rem;
+  border-radius: $border-radius;
+
+  &:disabled {
+    opacity: $opactiy-light;
+  }
+  &-primary {
+    color: $text-color-white;
+    background-color: $primary-color;
+  }
+  &-warning {
+    color: $text-color-white;
+    background-color: $warning-color;
+  }
+  &-inline {
+    display: inline-block;
+    width: auto;
+  }
+  &-small {
+    padding: $padding-y-small $padding-x-small;
+    font-size: $font-size-small;
+  }
+  
 }
 </style>
 

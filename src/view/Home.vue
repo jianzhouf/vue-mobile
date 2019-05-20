@@ -8,6 +8,14 @@
         <router-link to="/listView">List</router-link>
       </z-list-item>
     </z-list>
+     <z-list title="数据录入">
+      <z-list-item arrow="right">
+        <router-link to="/buttonView">按钮</router-link>
+      </z-list-item>
+      <z-list-item arrow="right">
+        <router-link to="/inputItemView">输入框</router-link>
+      </z-list-item>
+    </z-list>
   </div>
 </template>
 <script>
