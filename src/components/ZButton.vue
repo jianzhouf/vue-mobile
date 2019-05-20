@@ -46,6 +46,7 @@ export default {
 <style lang="scss" scoped>
 @import "./config.scss";
 .z-button {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   display: block;
   box-sizing: border-box;
   font-size: $font-size;
@@ -76,7 +77,6 @@ export default {
     padding: $padding-y-small $padding-x-small;
     font-size: $font-size-small;
   }
-  
 }
 </style>
 
