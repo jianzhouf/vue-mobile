@@ -1,6 +1,11 @@
 <template>
-  <div style="padding: 20px;">
-    <ZButton @click="show" type="primary">show</ZButton>
+  <div>
+    <div style="margin-top: 800px;display:flex;">
+      <div>123</div>
+      <div>123</div>
+    </div>
+  
+    <ZButton style="margin-bottom: 800px;" @click="show" type="primary">show</ZButton>
   </div>
 </template>
 <script>
@@ -21,5 +26,8 @@ export default {
 };
 </script>
 <style>
+body{
+  width: 100%;
+}
 </style>
 

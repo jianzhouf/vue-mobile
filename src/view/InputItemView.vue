@@ -17,7 +17,6 @@
 
 <script>
 import ZList from "@/components/ZList.vue";
-import ZListItem from "@/components/ZListItem.vue";
 import ZInputItem from "@/components/ZInputItem.vue";
 import ZButton from "@/components/ZButton.vue";
 
@@ -25,7 +24,6 @@ import ZButton from "@/components/ZButton.vue";
 export default {
   components: {
     ZList,
-    ZListItem,
     ZInputItem,
     ZButton
   },
@@ -35,14 +33,14 @@ export default {
     };
   },
   methods: {
-    handlechange: function(value) {
-      console.log(value);
+    handlechange: function() {
+      // console.log(value);
     },
     handleClick:function (){
-      console.log(this.aaa);
+      // console.log(this.aaa);
     },
-    handleinput: function (value){
-      console.log(value);
+    handleinput: function (){
+      // console.log(value);
     }
   }
 };

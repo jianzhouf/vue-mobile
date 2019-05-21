@@ -77,7 +77,7 @@ export default {
       this.currentValue = event.target.value;
       this.$emit("change", this.currentValue);
     },
-    handleClear: function(event) {
+    handleClear: function() {
       this.currentValue = "";
     }
   },

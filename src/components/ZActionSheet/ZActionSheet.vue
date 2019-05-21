@@ -26,7 +26,8 @@ export default {
     return {
       visible: false,
       maskClosable: true,
-      options: []
+      options: [],
+      top: 0
     };
   },
   methods: {
@@ -37,13 +38,25 @@ export default {
       this.visible = false;
     }
   },
-  created() {}
+  watch: {
+    visible: function(val) {
+      if (val) {
+        this.top =
+        document.body.scrollTop || document.documentElement.scrollTop;
+        document.body.style.position = "fixed";
+        document.body.style.top = -this.top + "px";
+      } else {
+        document.body.style.position = "";
+        document.documentElement.scrollTop = document.body.scrollTop = this.top;
+      }
+    }
+  }
 };
 </script>
 
 <style lang="postcss" scoped>
 .z-mask {
-  position: absolute;
+  position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
