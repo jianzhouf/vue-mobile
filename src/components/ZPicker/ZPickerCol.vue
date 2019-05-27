@@ -24,66 +24,64 @@ export default {
       deltaTranslateY: 0
     };
   },
-  created() {
-    setTimeout(() => {
-      const target = this.$refs.pickerCol;
+  mounted() {
+    const target = this.$refs.pickerCol;
 
-      let touchStartPageY,
-        deltaTranslateY = 0;
-      let elasticityHeight = 100;
-      let paddingTop = 100;
-      let boundaryTop = 0;
-      let boundaryBottom;
-      const rect = target.getBoundingClientRect();
-      boundaryBottom = -rect.height + paddingTop * 2 + 30;
+    let touchStartPageY,
+      deltaTranslateY = 0;
+    let elasticityHeight = 100;
+    let paddingTop = 100;
+    let boundaryTop = 0;
+    let boundaryBottom;
+    const rect = target.getBoundingClientRect();
+    boundaryBottom = -rect.height + paddingTop * 2 + 30;
 
-      if (this.value) {
-        this.$emit("change", this.value);
-        const n = this.list.findIndex(c => c.value === this.value.value);
-        deltaTranslateY = -n * 30;
-        this.deltaTranslateY = deltaTranslateY;
-        target.style.transform = `translateY(${deltaTranslateY}px)`;
-      } else {
-        this.$emit("change", this.list[0]);
+    if (this.value) {
+      this.$emit("change", this.value);
+      const n = this.list.findIndex(c => c.value === this.value.value);
+      deltaTranslateY = -n * 30;
+      this.deltaTranslateY = deltaTranslateY;
+      target.style.transform = `translateY(${deltaTranslateY}px)`;
+    } else {
+      this.$emit("change", this.list[0]);
+    }
+
+    target.addEventListener("touchstart", e => {
+      const touch = e.targetTouches[0];
+      touchStartPageY = touch.pageY;
+    });
+
+    target.addEventListener("touchmove", e => {
+      e.preventDefault();
+      const touch = e.targetTouches[0];
+      //手势滑动时，手势坐标不断变化，取最后一点的坐标为最终的终点坐标
+      const endY = touch.pageY;
+      if (deltaTranslateY < elasticityHeight) {
+        deltaTranslateY = deltaTranslateY + endY - touchStartPageY;
       }
-
-      target.addEventListener("touchstart", e => {
-        const touch = e.targetTouches[0];
-        touchStartPageY = touch.pageY;
-      });
-
-      target.addEventListener("touchmove", e => {
-        e.preventDefault();
-        const touch = e.targetTouches[0];
-        //手势滑动时，手势坐标不断变化，取最后一点的坐标为最终的终点坐标
-        const endY = touch.pageY;
-        if (deltaTranslateY < elasticityHeight) {
-          deltaTranslateY = deltaTranslateY + endY - touchStartPageY;
+      target.style.transform = `translateY(${deltaTranslateY}px)`;
+      touchStartPageY = endY;
+    });
+    target.addEventListener("touchend", e => {
+      let n;
+      if (deltaTranslateY > boundaryTop) {
+        deltaTranslateY = 0;
+        n = 0;
+      } else if (deltaTranslateY < boundaryBottom) {
+        deltaTranslateY = boundaryBottom;
+        n = this.list.length - 1;
+      } else {
+        const abs = Math.abs(deltaTranslateY);
+        const occupy = abs % 30;
+        n = Math.floor(abs / 30);
+        if (occupy > 4) {
+          n = n + 1;
         }
-        target.style.transform = `translateY(${deltaTranslateY}px)`;
-        touchStartPageY = endY;
-      });
-      target.addEventListener("touchend", e => {
-        let n;
-        if (deltaTranslateY > boundaryTop) {
-          deltaTranslateY = 0;
-          n = 0;
-        } else if (deltaTranslateY < boundaryBottom) {
-          deltaTranslateY = boundaryBottom;
-          n = this.list.length - 1;
-        } else {
-          const abs = Math.abs(deltaTranslateY);
-          const occupy = abs % 30;
-          n = Math.floor(abs / 30);
-          if (occupy > 4) {
-            n = n + 1;
-          }
-          deltaTranslateY = -n * 30;
-        }
-        this.$emit("change", this.list[n]);
-        this.deltaTranslateY = deltaTranslateY;
-        target.style.transform = `translateY(${deltaTranslateY}px)`;
-      });
+        deltaTranslateY = -n * 30;
+      }
+      this.$emit("change", this.list[n]);
+      this.deltaTranslateY = deltaTranslateY;
+      target.style.transform = `translateY(${deltaTranslateY}px)`;
     });
   }
 };
