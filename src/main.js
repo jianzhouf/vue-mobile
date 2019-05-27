@@ -5,9 +5,17 @@ import ActionSheetView from "@/view/ActionSheetView"
 import ListView from "@/view/ListView"
 import ButtonView from "@/view/ButtonView"
 import InputItemView from "@/view/InputItemView"
-
-
+import PickerView from "@/view/PickerView"
 import Home from "@/view/Home"
+
+import FastClick from "fastclick"
+
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', function () {
+    console.log("FastClick")
+    FastClick.attach(document.body);
+  }, false);
+}
 
 Vue.use(VueRouter)
 
@@ -18,6 +26,7 @@ const routes = [
   { path: '/listView', component: ListView },
   { path: '/buttonView', component: ButtonView },
   { path: '/inputItemView', component: InputItemView },
+  { path: '/pickerView', component: PickerView },
 ]
 
 const router = new VueRouter({

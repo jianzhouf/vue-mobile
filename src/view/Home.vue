@@ -15,6 +15,9 @@
       <z-list-item arrow="right">
         <router-link to="/inputItemView">输入框</router-link>
       </z-list-item>
+      <z-list-item arrow="right">
+        <router-link to="/pickerView">选择器</router-link>
+      </z-list-item>
     </z-list>
   </div>
 </template>

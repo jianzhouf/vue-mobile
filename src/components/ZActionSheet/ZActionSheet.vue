@@ -1,15 +1,18 @@
 <template>
   <div class="z-action-sheet">
-    <div class="z-mask" v-if="visible" @click="maskClosable&&hide()"></div>
+    <div ref="maskRef" class="z-mask" v-if="zvisible" @click="maskClosable&&hide()"></div>
     <transition name="fade">
-      <div v-if="visible" class="z-action-sheet__panel">
-        <ZButton
-          noBorder
-          v-for="item in options"
-          :key="item.title"
-          @click="item.event&&item.event($event)"
-        >{{item.title}}</ZButton>
-        <ZButton noBorder style="margin-top: 1rem" @click="hide">取消</ZButton>
+      <div v-if="zvisible" class="z-action-sheet__panel">
+        <slot></slot>
+        <div v-if="defaultCancel">
+          <ZButton
+            noBorder
+            v-for="item in options"
+            :key="item.title"
+            @click="item.event&&item.event($event)"
+          >{{item.title}}</ZButton>
+          <ZButton noBorder style="margin-top: 1rem" @click="hide">取消</ZButton>
+        </div>
       </div>
     </transition>
   </div>
@@ -22,9 +25,16 @@ export default {
   components: {
     ZButton
   },
+  props: {
+    visible: Boolean,
+    defaultCancel: {
+      type: Boolean,
+      default: true
+    }
+  },
   data() {
     return {
-      visible: false,
+      zvisible: false,
       maskClosable: true,
       options: [],
       top: 0
@@ -32,17 +42,21 @@ export default {
   },
   methods: {
     show() {
-      this.visible = true;
+      this.zvisible = true;
     },
     hide() {
-      this.visible = false;
+      this.zvisible = false;
     }
   },
+
   watch: {
     visible: function(val) {
+      this.zvisible = val;
+    },
+    zvisible: function(val) {
       if (val) {
         this.top =
-        document.body.scrollTop || document.documentElement.scrollTop;
+          document.body.scrollTop || document.documentElement.scrollTop;
         document.body.style.position = "fixed";
         document.body.style.top = -this.top + "px";
       } else {
@@ -54,7 +68,7 @@ export default {
 };
 </script>
 
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
 .z-mask {
   position: fixed;
   top: 0;

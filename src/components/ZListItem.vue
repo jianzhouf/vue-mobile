@@ -4,7 +4,7 @@
       <div class="z-list-item-content">
         <slot></slot>
       </div>
-      <div class="z-list-item-extra"></div>
+      <div class="z-list-item-extra">{{extra}}</div>
       <ZIcon v-if="isRightArrow" type="right"></ZIcon>
     </div>
   </div>
@@ -16,7 +16,8 @@ export default {
     ZIcon
   },
   props: {
-    arrow: String
+    arrow: String,
+    extra: String
   },
   data() {
     return {};
@@ -28,17 +29,18 @@ export default {
   }
 };
 </script>
-<style lang="postcss" scoped>
+<style lang="scss" scoped>
+@import "./config.scss";
 .z-list-item {
-  font-size: 1.6rem;
-  padding-left: 1.4rem;
-  background: #fff;
-  color: #333;
+  font-size: $font-size;
+  padding-left: $padding-x;
+  background: $background-color;
+  color: $text-color-dark;
 }
 .z-list-item-line {
-  padding: 1rem 1.4rem;
+  padding: $padding-y $padding-x;
   padding-left: 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid $border-color;
   display: flex;
   align-items: center;
 }

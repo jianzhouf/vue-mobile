@@ -2,9 +2,9 @@ import ZActionSheet from "./ZActionSheet.vue";
 import Vue from "vue";
 const ZAS = Vue.extend(ZActionSheet)
 
-let instance 
-const initInstance = ()=>{
-    if(!instance){
+let instance
+const initInstance = () => {
+    if (!instance) {
         instance = new ZAS({
             el: document.createElement("div")
         })
@@ -15,11 +15,11 @@ const initInstance = ()=>{
 
 
 
-function show(options){
+function show(options) {
     initInstance();
-    for(let key in options){
-        if(options.hasOwnProperty(key)){
-            instance[key]= options[key]
+    for (let key in options) {
+        if (options.hasOwnProperty(key)) {
+            instance[key] = options[key]
         }
     }
     instance.visible = true
